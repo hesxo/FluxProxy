@@ -33,15 +33,18 @@ jobs:
           sleep 8
           curl -sf --retry 10 --retry-delay 3 --retry-all-errors http://127.0.0.1:80/ | head -c 500 | grep -q .
 
-      # Official image (aquasec/trivy); avoids trivy-action's setup-trivy binary download failures
+      # aquasec/trivy image; skip bundled npm under /usr/local (not app code; fixed in upstream Node images)
       - name: Run Trivy vulnerability scanner
         run: |
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
             aquasec/trivy:latest image \
+            --scanners vuln \
+            --pkg-types os,library \
             --exit-code 1 \
             --ignore-unfixed \
-            --vuln-type os,library \
+            --skip-dirs usr/local/lib/node_modules/npm \
+            --skip-dirs usr/local/lib/node_modules/corepack \
             --format table \
             "${{ env.IMAGE_NAME }}"
 
