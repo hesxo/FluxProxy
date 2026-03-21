@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="FluxProxy — a pixel art gallery served behind a reverse proxy."
+    />
+    <title>FluxProxy | Gallery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <header class="py-8 text-center px-4">
+      <h1
+        class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500"
+      >
+        FluxProxy
+      </h1>
+      <p class="text-gray-600 mt-2">Pixel art gallery</p>
+    </header>
+
+    <main class="flex-1 w-full max-w-7xl mx-auto px-6 pb-8">
+      <h2 id="gallery-heading" class="sr-only">Gallery</h2>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        role="list"
+      >
+        <article
+          class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1"
+          role="listitem"
+        >
+          <figure class="m-0">
+            <img
+              src="images/kakashi.jpg"
+              alt=""
+              width="800"
+              height="640"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-64 object-cover"
+            />
+            <figcaption class="p-4">
+              <h3 class="text-lg font-semibold text-gray-800">Kakashi Hatake</h3>
+              <p class="text-sm text-gray-600">Cross-stitch style pixel portrait</p>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article
+          class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1"
+          role="listitem"
+        >
+          <figure class="m-0">
+            <img
+              src="images/kanye.png"
+              alt=""
+              width="800"
+              height="800"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-64 object-cover"
+            />
+            <figcaption class="p-4">
+              <h3 class="text-lg font-semibold text-gray-800">Kanye West</h3>
+              <p class="text-sm text-gray-600">Pixel art portrait</p>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article
+          class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1"
+          role="listitem"
+        >
+          <figure class="m-0">
+            <img
+              src="images/pikachu.jpg"
+              alt=""
+              width="800"
+              height="640"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-64 object-cover"
+            />
+            <figcaption class="p-4">
+              <h3 class="text-lg font-semibold text-gray-800">Pikachu</h3>
+              <p class="text-sm text-gray-600">Pokémon pixel sprite</p>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article
+          class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition transform hover:-translate-y-1"
+          role="listitem"
+        >
+          <figure class="m-0">
+            <img
+              src="images/naruto.jpg"
+              alt=""
+              width="800"
+              height="640"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-64 object-cover"
+            />
+            <figcaption class="p-4">
+              <h3 class="text-lg font-semibold text-gray-800">Naruto Uzumaki</h3>
+              <p class="text-sm text-gray-600">Full-body pixel sprite</p>
+            </figcaption>
+          </figure>
+        </article>
+      </div>
+    </main>
+
+    <footer class="mt-auto py-6 border-t border-gray-200 text-center text-gray-500 px-4">
+      <p>
+        <small>&copy; <time datetime="2026">2026</time> FluxProxy. All rights reserved.</small>
+      </p>
+    </footer>
+  </body>
+</html>
