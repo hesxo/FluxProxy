@@ -1,6 +1,6 @@
 # 📦 FluxProxy
 
-**FluxProxy** is a scalable, containerized reverse proxy system built with Node.js and Express, managed via Docker Compose. It includes a centralized logging stack powered by Loki, Promtail, and Grafana, and features a CircleCI-based CI/CD pipeline for secure, automated deployment.
+**FluxProxy** is a scalable, containerized reverse proxy system built with Node.js and Express, managed via Docker Compose. It includes a centralized logging stack powered by Loki, Promtail, and Grafana, and uses **GitHub Actions** for CI (build, Compose smoke test, Trivy scan, and Docker Hub publish on `main`).
 
 ---
 
@@ -71,14 +71,17 @@
 
 ---
 
-## ⚙️ CI/CD Pipeline (CircleCI)
+## ⚙️ CI/CD (GitHub Actions)
 
-1. 🛠️ Checkout code
-2. 🏗️ Build Docker image
-3. ▶️ Run `docker-compose`
-4. 🔍 Trivy security scan
-5. 🔐 Docker Hub login
-6. 🏷️ Tag and push image
+Workflow: `.github/workflows/ci.yml` (runs on pushes and pull requests to `main`).
+
+1. Checkout code  
+2. Build Docker image (`fluxproxy:latest`)  
+3. `docker compose up -d --build` and HTTP smoke test on port 80  
+4. Trivy image scan (`--exit-code 1`, OS + library vulns)  
+5. On **push to `main` only**: Docker Hub login and push `fluxproxy:latest`  
+
+**Repository secrets** (Settings → Secrets and variables → Actions): `DOCKERHUB_USERNAME`, `DOCKERHUB_PASSWORD` (a [Docker Hub access token](https://docs.docker.com/security/for-developers/access-tokens/) works as the password).
 
 ---
 
@@ -88,7 +91,7 @@
 
 - Docker & Docker Compose
 - Node.js
-- CircleCI account (optional for CI/CD)
+- GitHub repository with Actions enabled (for CI/CD)
 
 ### Development Build
 

@@ -1,0 +1,76 @@
+version: "3.9"
+
+x-develop: &default-dev
+  watch:
+    - path: .
+      target: /app
+      action: sync
+      ignore:
+        - node_modules/
+        - logs/
+        - .git/
+        - npm-debug.log
+        - docker-compose.override.yml
+
+services:
+  pixpro_1:
+    build: .
+    environment:
+      APP_NAME: FluxProxy 1
+    ports:
+      - "3001:3000"
+    networks:
+      - pixpro-network
+    develop:
+      <<: *default-dev
+
+  pixpro_2:
+    build: .
+    environment:
+      APP_NAME: FluxProxy 2
+    ports:
+      - "3002:3000"
+    networks:
+      - pixpro-network
+    develop:
+      <<: *default-dev
+
+  pixpro_3:
+    build: .
+    environment:
+      APP_NAME: FluxProxy 3
+    ports:
+      - "3003:3000"
+    networks:
+      - pixpro-network
+    develop:
+      <<: *default-dev
+
+  pixpro_backup:
+    build: .
+    environment:
+      APP_NAME: FluxProxy Backup
+    ports:
+      - "3004:3000"
+    networks:
+      - pixpro-network
+    develop:
+      <<: *default-dev
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - pixpro_1
+      - pixpro_2
+      - pixpro_3
+      - pixpro_backup
+    networks:
+      - pixpro-network
+
+networks:
+  pixpro-network:

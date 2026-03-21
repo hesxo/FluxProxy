@@ -1,11 +1,7 @@
 node_modules/
 logs/
-kompose.exe 
-.circleci/
-docker-compose.logging.yml
-Dockerfile
+kompose.exe
 nginx.conf
 promtail-config.yaml
 loki-config.yaml
-server.js
-docker-compose.yaml
+
