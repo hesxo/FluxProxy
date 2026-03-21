@@ -79,9 +79,16 @@ Workflow: `.github/workflows/ci.yml` (runs on pushes and pull requests to `main`
 2. Build Docker image (`fluxproxy:latest`)  
 3. `docker compose up -d --build` and HTTP smoke test on port 80  
 4. Trivy image scan (`--exit-code 1`, OS + library vulns)  
-5. On **push to `main` only**: Docker Hub login and push `fluxproxy:latest`  
+5. On **push to `main` only** (when push secrets are configured): Docker Hub login and push `fluxproxy:latest`  
 
-**Repository secrets** (Settings → Secrets and variables → Actions): `DOCKERHUB_USERNAME`, `DOCKERHUB_PASSWORD` (a [Docker Hub access token](https://docs.docker.com/security/for-developers/access-tokens/) works as the password).
+**Repository secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | What to use |
+|--------|----------------|
+| `DOCKERHUB_USERNAME` | Your **Docker Hub ID** — the short username in your profile URL (`hub.docker.com/u/thisname`). **Not** your email address. |
+| `DOCKERHUB_PASSWORD` | A [Docker Hub access token](https://docs.docker.com/security/for-developers/access-tokens/) (recommended) or your account password. |
+
+If these secrets are missing, CI still passes; the image is not pushed.
 
 ---
 

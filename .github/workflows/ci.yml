@@ -1,5 +1,5 @@
 # Build image, run Compose stack, Trivy scan; push to Docker Hub when secrets are set.
-# Optional secrets: DOCKERHUB_USERNAME, DOCKERHUB_PASSWORD (cannot use secrets in `if:` — see dockerhub_push step).
+# Optional secrets: DOCKERHUB_USERNAME = Hub ID (hub.docker.com/u/<id>), not email; DOCKERHUB_PASSWORD = token or password.
 
 name: CI
 
