@@ -1,7 +1,3 @@
 node_modules/
 logs/
 kompose.exe
-nginx.conf
-promtail-config.yaml
-loki-config.yaml
-
