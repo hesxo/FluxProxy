@@ -7,6 +7,5 @@ Dockerfile
 nginx.conf
 promtail-config.yaml
 loki-config.yaml
-README.md
 server.js
 docker-compose.yaml
