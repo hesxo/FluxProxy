@@ -6,7 +6,7 @@
 
 ## 📌 Architecture Overview
 
-![FluxProxy Architecture](https://i.postimg.cc/ht9SNxb7/pixelproxy-arch.png)
+![FluxProxy Architecture](https://i.postimg.cc/DfRP0s28/Screenshot-2026-03-22-at-3-36-32-PM.png)
 
 ---
 
