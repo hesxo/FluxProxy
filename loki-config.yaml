@@ -2,17 +2,39 @@ auth_enabled: false
 
 server:
   http_listen_port: 3100
-  grpc_listen_port: 9095
 
-common_config:
-  path_prefix: /tmp/loki
-  storage_engine: "filesystem"
-  chunk_target_size: 1048576
+common:
+  path_prefix: /loki
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  replication_factor: 1
+  ring:
+    kvstore:
+      store: inmemory
 
-scrape_configs:
-  - job_name: "promtail"
-    static_configs:
-      - targets:
-          - "promtail:9080"
-        labels:
-          job: "promtail"
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+
+ruler:
+  alertmanager_url: http://localhost:9093
+
+# Grafana dashboards run several range/instant queries at once; stock limits
+# often return "too many outstanding requests" (HTTP 500).
+frontend:
+  max_outstanding_per_tenant: 4096
+
+query_scheduler:
+  max_outstanding_requests_per_tenant: 4096
+
+limits_config:
+  max_query_parallelism: 32
+  split_queries_by_interval: 15m

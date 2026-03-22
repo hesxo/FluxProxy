@@ -1,0 +1,14 @@
+apiVersion: 1
+
+datasources:
+  - name: Loki
+    type: loki
+    uid: loki-flux
+    access: proxy
+    # Grafana always appends /loki/api/v1/... to this URL. Do NOT add /loki here or you get
+    # /loki/loki/api/v1/... → 404 (shown as Status 500 in panels).
+    url: http://loki:3100
+    isDefault: true
+    editable: true
+    jsonData:
+      maxLines: 1000

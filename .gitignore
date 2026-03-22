@@ -1,3 +1,17 @@
 node_modules/
 logs/
+
+# Promtail read offsets (recreate or delete to re-ingest logs into Loki)
+promtail-data/*
+!promtail-data/.gitkeep
+
 kompose.exe
+
+# OS
+.DS_Store
+
+# Local secrets and compose overrides
+.env
+.env.*
+!.env.example
+docker-compose.override.yml
