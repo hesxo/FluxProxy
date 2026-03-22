@@ -103,14 +103,18 @@ If these secrets are missing, CI still passes; the image is not pushed.
 ### Development Build
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-### Logging Stack Build ( Grafana )
+### Logging stack (Grafana, Loki, Promtail)
 
 ```bash
-docker compose -f docker-compose.logging.yml up --build
+docker compose -f docker-compose.logging.yml up -d --build
 ```
+
+Keep the **main app stack** running as well so Nginx writes to `./logs/nginx`; Promtail tails those files and ships them to Loki.
+
+**Ports:** Grafana `3000`, Loki API `3100` (no browser UI—use Grafana).
 
 ---
 
@@ -143,10 +147,44 @@ docker compose -f docker-compose.logging.yml up --build
 
 ---
 
-## 📈 Monitoring Dashboard
+## 📈 Grafana dashboard (Nginx → Loki)
 
-Visit **Grafana** at: `http://localhost:3000`
-Default credentials:
+Provisioned dashboard: **Dashboards → folder *FluxProxy* → *FluxProxy — Nginx (Loki)***.  
+Data path: **Nginx access/error logs** (host bind mount) → **Promtail** → **Loki** → **Grafana**.
 
-- **User**: `admin`
-- **Password**: `admin`
+**Open Grafana:** `http://localhost:3000`  
+
+**Default login**
+
+| Field    | Value   |
+| -------- | ------- |
+| User     | `admin` |
+| Password | `admin` |
+
+Use the time picker (e.g. **Last 30 minutes**) and the **HTTP status** variable to filter. The dashboard includes traffic rates by status and method, volume and 5xx trends, summary stats, distribution charts, top paths and client IPs (regex on the combined log line), filtered 5xx/4xx log panels, and full raw access/error streams.
+
+### Screenshots
+
+**Traffic and volume**
+
+![Request rate by status/method and total lines/s](https://i.postimg.cc/jjnBL121/Screenshot_2026_03_22_at_12_23_25_PM.png)
+
+**Overview**
+
+![Dashboard overview: traffic, volume, summary, distribution, top paths](https://i.postimg.cc/nhP6VxFy/Screenshot_2026_03_22_at_12_23_14_PM.png)
+
+**Summary and distribution**
+
+![Summary counts, donut by status, bars by method, 5xx by code](https://i.postimg.cc/MGfgvLX8/Screenshot_2026_03_22_at_12_23_30_PM.png)
+
+**Top paths and clients**
+
+![Tables: top request paths and top client IPs](https://i.postimg.cc/jjnBL129/Screenshot_2026_03_22_at_12_23_36_PM.png)
+
+**Filtered log streams**
+
+![5xx-only, 4xx-only, and status-variable log panels](https://i.postimg.cc/1zVbfd4S/Screenshot_2026_03_22_at_12_24_07_PM.png)
+
+**Raw Nginx logs**
+
+![Full access log stream and error log panel](https://i.postimg.cc/wBRn7r3v/Screenshot_2026_03_22_at_12_24_11_PM.png)
